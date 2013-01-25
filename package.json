@@ -10,7 +10,6 @@
     "jade": "*",
     "mongoose": "3.x"
   },
-
   "engines": {
       "node": "0.8.14 ",
       "npm": "1.1.65"

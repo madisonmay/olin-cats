@@ -43,7 +43,7 @@ app.get('/cat/new', function(req,res) {
   bob.save(function (err) {
     if (err) 
         console.log("error", err);
-    console.log("meow");
+    res.send("meow");
   });
 });
 
