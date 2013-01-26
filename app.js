@@ -32,7 +32,8 @@ app.configure('development', function(){
 
 app.get('/', routes.index);
 app.get('/cats', cats.list);
-app.get('/cats/new', cats.new);
+app.get('/cats/new', cats.new_form);
+app.post('/cats/new', cats.new);
 app.get('/cats/color/:color', cats.list_by_color);
 app.get('/cats/delete/old', cats.delete_old);
 

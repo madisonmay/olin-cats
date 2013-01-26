@@ -20,7 +20,6 @@ exports.list = function(req, res){
   var Cat = mongoose.model('Cat', catSchema);
   Cat.find({}, function (err, db_cats) {
     if(err) {console.log("Error")}
-    console.log(db_cats);
     db_cats.sortByProp('age');
     res.render('cats', {
       cats: db_cats, 
@@ -34,7 +33,6 @@ exports.list_by_color = function(req, res){
   var Cat = mongoose.model('Cat', catSchema);
   Cat.find({colors:req.params.color}, function (err, db_cats) {
     if(err) {console.log("Error")}
-    console.log(db_cats);
     db_cats.sortByProp('age');
     res.render('cats', {
       cats: db_cats, 
@@ -50,9 +48,7 @@ exports.delete_old = function(req, res){
     if(err) {console.log("Error")}
     db_cats.sortByProp('age');
     old_cat = db_cats.pop();
-    console.log(old_cat);
     Cat.remove({_id:old_cat._id}, function(err) {
-      console.log(old_cat.name);
       if (err)
         console.log("Error");
     });
@@ -63,13 +59,18 @@ exports.delete_old = function(req, res){
   });
 };
 
-exports.new = function(req, res) {
-	var Cat = mongoose.model('Cat', catSchema);
-  	var new_cat = new Cat({name: 'bob', age: '12', colors:['black', 'green']});
-		new_cat.save(function (err) {
-		if (err) 
-	    	console.log("error", err);
-	    res.render('create_cat', {title:'Create a cat'});
-  		});
+exports.new_form = function(req, res) {
+  res.render('create_cat', {title:'Create a cat'});
 };
 
+exports.new = function(req, res) {
+  var Cat = mongoose.model('Cat', catSchema);
+  var age = Math.floor(Math.random()*10);
+  var colors = req.body.colors.replace(/ /g,'').split(",");
+  var new_cat = new Cat({name: req.body.name, age: age, colors: colors});
+  new_cat.save(function (err) {
+    if (err) 
+      console.log("error", err);
+    res.send('Cat creation may take up to two months.  Please wait patiently for your selected kitten.')
+  });
+};
