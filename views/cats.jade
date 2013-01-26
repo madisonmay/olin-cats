@@ -1,0 +1,14 @@
+extends layout
+
+block content
+	h1= title
+	div
+	if (cats.length > 0)
+		each cat in cats
+			div(value=cat) 
+				p Name: #{cat.name}	
+				p Colors: #{cat.colors} 
+				p Age: #{cat.age}
+				p --------------------------
+	else
+		p Oh, dear.  It seems we have run out of cats in that color.
