@@ -66,7 +66,7 @@ exports.new_form = function(req, res) {
 exports.new = function(req, res) {
   var Cat = mongoose.model('Cat', catSchema);
   var age = Math.floor(Math.random()*10);
-  var colors = req.body.colors.replace(/ /g,'').split(",");
+  var colors = req.body.colors.replace(/ /g,'').toLowerCase().split(",");
   var new_cat = new Cat({name: req.body.name, age: age, colors: colors});
   new_cat.save(function (err) {
     if (err) 
