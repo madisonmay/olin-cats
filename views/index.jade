@@ -2,4 +2,9 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
+  p 
+    a(href='/cats', title='View cat directory') View cat directory
+  p 
+    a(href='/cats/new', title='Create a new cat') Create a new cat
+  p 
+    a(href='/cats/delete/old', title='Kill an old cat') Kill an old cat

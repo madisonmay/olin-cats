@@ -11,4 +11,7 @@ block content
 				p Age: #{cat.age}
 				p --------------------------
 	else
-		p Oh, dear.  It seems we have run out of cats in that color.
+		if colorsort
+			p Oh, dear.  It seems we have run out of cats in that color.
+		else
+			p Oh, dear.  It seems we are all out of cats.

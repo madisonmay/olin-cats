@@ -24,7 +24,8 @@ exports.list = function(req, res){
     db_cats.sortByProp('age');
     res.render('cats', {
       cats: db_cats, 
-      title: 'Cat Directory'
+      title: 'Cat Directory',
+      colorsort: false
     });
   });
 };
@@ -37,7 +38,8 @@ exports.list_by_color = function(req, res){
     db_cats.sortByProp('age');
     res.render('cats', {
       cats: db_cats, 
-      title: 'Sort by color: ' + req.params.color
+      title: 'Sort by color: ' + req.params.color,
+      colorsort: true
     });
   });
 };
@@ -48,7 +50,8 @@ exports.delete_old = function(req, res){
     if(err) {console.log("Error")}
     db_cats.sortByProp('age');
     old_cat = db_cats.pop();
-    Cat.remove({name:old_cat.name, age:old_cat.age}, function(err) {
+    console.log(old_cat);
+    Cat.remove({_id:old_cat._id}, function(err) {
       console.log(old_cat.name);
       if (err)
         console.log("Error");
@@ -66,7 +69,7 @@ exports.new = function(req, res) {
 		new_cat.save(function (err) {
 		if (err) 
 	    	console.log("error", err);
-	    res.send("You cat is being created... be warned that this may take up to 2 months.");
+	    res.render('create_cat', {title:'Create a cat'});
   		});
 };
 
