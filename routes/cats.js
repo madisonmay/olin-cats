@@ -4,20 +4,26 @@ var mongoose = require("mongoose");
  */
 var db = mongoose.connection;
 
+
+//from StackOverflow
 Array.prototype.sortByProp = function(p){
  return this.sort(function(a,b){
   return (a[p] > b[p]) ? 1 : (a[p] < b[p]) ? -1 : 0;
  });
 }
 
+//Define cat schema
 var catSchema = mongoose.Schema({
     name: String,
     colors: Array(),
     age: Number
 });
 
+//For use in exported functions
+var Cat = mongoose.model('Cat', catSchema);
+
+//For cat directory
 exports.list = function(req, res){
-  var Cat = mongoose.model('Cat', catSchema);
   Cat.find({}, function (err, db_cats) {
     if(err) {console.log("Error")}
     db_cats.sortByProp('age');
@@ -30,7 +36,6 @@ exports.list = function(req, res){
 };
 
 exports.list_by_color = function(req, res){
-  var Cat = mongoose.model('Cat', catSchema);
   Cat.find({colors:req.params.color}, function (err, db_cats) {
     if(err) {console.log("Error")}
     db_cats.sortByProp('age');
@@ -43,7 +48,6 @@ exports.list_by_color = function(req, res){
 };
 
 exports.delete_old = function(req, res){
-  var Cat = mongoose.model('Cat', catSchema);
   Cat.find({}, function (err, db_cats) {
     if(err) {console.log("Error")}
     db_cats.sortByProp('age');
@@ -54,7 +58,7 @@ exports.delete_old = function(req, res){
     });
     res.render('cats', {
       cats: [old_cat], 
-      title: 'An old cat has died.  The world is now a better place.'
+      title: 'An old cat has died. The world is now a better place.'
     });
   });
 };
@@ -64,7 +68,6 @@ exports.new_form = function(req, res) {
 };
 
 exports.new = function(req, res) {
-  var Cat = mongoose.model('Cat', catSchema);
   var age = Math.floor(Math.random()*10);
   var colors = req.body.colors.replace(/ /g,'').toLowerCase().split(",");
   var new_cat = new Cat({name: req.body.name, age: age, colors: colors});
