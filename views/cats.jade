@@ -7,7 +7,7 @@ block content
 		each cat in cats
 			div(value=cat) 
 				p Name: #{cat.name}	
-				p Colors: #{cat.colors} 
+				p Colors: #{cat.colors.join(', ')} 
 				p Age: #{cat.age}
 				p --------------------------
 	else
